@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<meta name="description" content="Matty Aldridge, MEng Mechanical Engineering, University of Edinburgh: a CAD and simulation pipeline and the aerospace, Formula Student and Hall thruster designs it produced.">
+<title>Matty Aldridge Engineering</title>
+</head>
+<body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style id="css">
+/* Layout: the page is a drawing sheet. Title block header; Sheet 1 = the tool (the main project); later sheets = case studies of designs it produced from my briefs, each a large view plus a parts-list data table. Single deliberate light theme: white sheet, black linework, square corners, colour only from the images. */
+:root{
+  --sheet:#ffffff; --ink:#111111; --ink-2:#4a4a4a; --ink-3:#737373; --line:#111111; --hair:#cfcfcf; --tint:#f3f3f1; --mark:#1f5fbf;
+  --draw:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --text:"Source Serif 4",Georgia,"Times New Roman",serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--sheet);color:var(--ink);font:18px/1.6 var(--text);margin:0}
+.sheet{max-width:960px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:clamp(16px,4vw,40px) 0}
+a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+p{margin:0}
+h2,h3{text-wrap:balance}
+
+/* title block */
+.tb{border:2px solid var(--line);display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr) minmax(0,1fr);font-family:var(--draw)}
+.tb > div{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 12px 10px;min-width:0}
+.tb > div.r{border-right:0}
+.tb > div.b{border-bottom:0}
+.tb .l{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.tb .v{display:block;font-size:16px;font-weight:500;line-height:1.3;margin-top:2px;overflow-wrap:anywhere}
+.tb .name{grid-row:span 3;display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+.tb h1{font:700 clamp(2rem,6vw,3.3rem)/.95 var(--draw);margin:0;letter-spacing:-.01em;text-transform:uppercase}
+.tb h1 > span{display:block}
+.tb .wide{grid-column:span 2}
+.email{user-select:all}
+.copy{font:600 12px var(--draw);background:var(--sheet);color:var(--ink);border:1px solid var(--line);padding:1px 7px;margin-left:8px;cursor:pointer;vertical-align:1px}
+.proj-sym{display:flex;align-items:center;gap:10px}
+.proj-sym svg{flex:none}
+
+.intro{margin-top:28px;max-width:62ch;font-size:1.15rem;line-height:1.55}
+.intro ~ .intro{margin-top:12px;font-size:1.02rem;color:var(--ink-2)}
+
+/* contents strip */
+.toc{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));border:1px solid var(--line);font-family:var(--draw)}
+.toc a{display:block;padding:8px 10px;border-right:1px solid var(--line);text-decoration:none;min-width:0}
+.toc a:last-child{border-right:0}
+.toc a:hover{background:var(--tint)}
+.toc .l{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.toc .v{display:block;font-size:15px;font-weight:600;line-height:1.25}
+
+/* views */
+.view{margin-top:60px}
+.vh{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--line);padding-bottom:6px;flex-wrap:wrap}
+.vh .tag{font:700 13px var(--draw);letter-spacing:.06em;text-transform:uppercase}
+.vh h2{font:700 1.7rem/1.1 var(--draw);margin:0;text-transform:uppercase;letter-spacing:.01em}
+.vh .scale{margin-left:auto;font:500 13px var(--draw);color:var(--ink-3)}
+.vbody{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px 30px;margin-top:16px;align-items:start}
+.vbody > *{min-width:0}
+figure{margin:0;position:relative;min-width:0}
+figure img{display:block;width:100%;height:auto;border:1px solid var(--hair)}
+.stack > figure + figure{margin-top:18px}
+figcaption{margin-top:7px;font:400 14px/1.45 var(--draw);color:var(--ink-2)}
+figcaption b{font-weight:600;color:var(--ink)}
+.desc{font-size:1.02rem}
+.pl{width:100%;border-collapse:collapse;margin-top:16px;font-family:var(--draw);font-size:14.5px}
+.pl caption{text-align:left;font:600 11px var(--draw);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding-bottom:4px}
+.pl th,.pl td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+.pl th{font-weight:500;color:var(--ink-2);width:52%}
+.pl td{font-weight:600;font-variant-numeric:tabular-nums}
+.verdict{margin-top:14px;font-size:1rem;border-left:3px solid var(--ink);padding:2px 0 2px 12px}
+.more{margin-top:12px;font:600 14px var(--draw)}
+
+/* who did what */
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:18px;border:1px solid var(--line);font-family:var(--draw);font-size:15px;line-height:1.45}
+.split.one{grid-template-columns:1fr}
+.split > div{padding:10px 12px;min-width:0}
+.split > div + div{border-left:1px solid var(--line)}
+.split .l{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.split ul{margin:0;padding-left:18px}
+.split li + li{margin-top:3px}
+
+/* pipeline diagram */
+.flow{margin-top:20px;overflow-x:auto;border:1px solid var(--line);background:var(--sheet)}
+.flow svg{display:block;min-width:760px;width:100%;height:auto}
+.flow text{font-family:var(--draw)}
+
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 26px;margin-top:22px}
+.cols3 > div{min-width:0;border-top:1px solid var(--line);padding-top:8px}
+.cols3 h3{font:700 15px/1.25 var(--draw);text-transform:uppercase;letter-spacing:.03em;margin:0 0 4px}
+.cols3 p{font-size:.98rem;color:var(--ink-2)}
+
+/* plates: supporting views */
+.plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 26px;margin-top:28px;padding-top:18px;border-top:1px solid var(--hair)}
+.plates.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.plates .span2{grid-column:span 2}
+.plates.c3 .span2{grid-column:span 3}
+.fn{font-weight:600;color:var(--ink);margin-right:6px}
+
+/* tables */
+.sub{margin-top:30px;font:700 13px var(--draw);letter-spacing:.06em;text-transform:uppercase}
+.checks{overflow-x:auto;margin-top:8px}
+.checks table{border-collapse:collapse;width:100%;min-width:560px;font-family:var(--draw);font-size:15px}
+.checks th,.checks td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+.checks th{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.checks td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* lessons */
+.notes{margin:10px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
+.notes li{min-width:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 12px}
+.notes .k{font:700 15px/1.5 var(--draw);border:1px solid var(--line);width:26px;height:26px;display:grid;place-items:center;border-radius:50%}
+.notes h3{font:700 15.5px/1.35 var(--draw);margin:2px 0 3px}
+.notes p{font-size:.97rem;color:var(--ink-2);grid-column:2}
+
+footer{margin-top:64px;border-top:2px solid var(--line);padding-block:10px 36px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;font:500 13px var(--draw);color:var(--ink-3)}
+
+/* edit mode: blue pencil marks on the sheet */
+.editing [data-p]{outline:1px dashed var(--mark);outline-offset:2px;cursor:text;min-width:2ch;display:inline-block}
+.editing p[data-p],.editing h2[data-p],.editing h3[data-p],.editing li > [data-p]{display:block}
+.editing [data-p]:focus{outline:2px solid var(--mark);background:var(--tint)}
+.ctl{display:inline-flex;flex-wrap:wrap;gap:3px;vertical-align:middle;margin-right:6px;font:600 12px var(--draw)}
+.ctl button,.ctl select,.add,#bar button{font:600 12px/1 var(--draw);border:1px solid var(--mark);background:var(--sheet);color:var(--mark);padding:4px 7px;cursor:pointer;border-radius:0}
+.ctl select{max-width:180px;padding:3px 4px}
+.ctl button:hover,.add:hover{background:var(--mark);color:var(--sheet)}
+figure .ctl{position:absolute;top:6px;right:6px;z-index:2;justify-content:flex-end;margin:0;background:var(--sheet);padding:4px;border:1px solid var(--mark);max-width:calc(100% - 12px)}
+.add{display:inline-block;margin-top:10px;border-style:dashed;padding:6px 10px}
+.edit-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;font:500 13px var(--draw);color:var(--mark)}
+#bar{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  background:var(--sheet);border:2px solid var(--ink);padding:8px 8px 8px 14px;font:500 13.5px/1.3 var(--draw);max-width:calc(100vw - 32px)}
+#bar button{padding:8px 12px;font-size:13px;border-color:var(--ink);color:var(--ink)}
+#bar .pri{background:var(--ink);color:var(--sheet)}
+#bar button[disabled]{opacity:.45;cursor:default}
+#bar .msg{color:var(--ink-2)}
+
+@media (max-width:760px){
+  .tb{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .tb .name{grid-column:span 2;grid-row:auto;border-right:0}
+  .tb > div{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tb > div.r{border-right:1px solid var(--line)}
+  .tb .wide{grid-column:span 2;border-right:0}
+  .toc{grid-template-columns:1fr}
+  .toc a{border-right:0;border-bottom:1px solid var(--line)}
+  .toc a:last-child{border-bottom:0}
+  .vbody,.split,.cols3,.notes{grid-template-columns:1fr}
+  .split > div + div{border-left:0;border-top:1px solid var(--line)}
+  .plates,.plates.c3{grid-template-columns:1fr}
+  .plates .span2,.plates.c3 .span2{grid-column:auto}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+<div id="app"></div>
+<script type="application/json" id="data">
+{
+ "meta": {
+  "name1": "Matty",
+  "name2": "Aldridge",
+  "docTitle": "Engineering portfolio",
+  "discipline": "MEng Mechanical Engineering",
+  "institution": "University of Edinburgh",
+  "focus": "Aerospace design, simulation, engineering software",
+  "location": "Edinburgh, UK",
+  "email": "matty.aldridge07@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/matty-aldridge-2922b2180/",
+  "date": "Oct 2026 · B",
+  "intro": [
+   "I built a pipeline that takes an engineering brief written in plain English and turns it into parametric CAD, SolidWorks drawings, stress, flow and thermal studies, and a report that checks every result against a hand calculation.",
+   "Sheet 1 is the tool. The later sheets are designs it produced from briefs I wrote, including work for my university Formula Student team and rocketry society. On those, the CAD, simulations and renders come from the pipeline. My part was the requirements, the review, and deciding what to fix. Each sheet says which parts were mine."
+  ],
+  "foot": [
+   "Matty Aldridge · Engineering portfolio · Rev B",
+   "Tools: SolidWorks, Fusion, Python, SU2, C++, Altium"
+  ],
+  "pdf": "Matty_Aldridge_Engineering_Portfolio.pdf"
+ },
+ "tool": {
+  "title": "CAD and simulation pipeline",
+  "toc": "the tool",
+  "scale": "Python · SolidWorks · Fusion · SU2",
+  "desc": "A set of AI agents with fixed jobs. A designer writes the part as Python code, a reviewer checks the views, mass and clashes, and an operator drives SolidWorks and Fusion through bridges into their APIs. Nothing goes in a report until the result has been compared with a hand calculation.",
+  "cols": [
+   {
+    "title": "CAD as code",
+    "text": "Parts are build123d scripts with parameters, materials and self-checks. Every build exports STEP, a four-view sheet and a mass report."
+   },
+   {
+    "title": "SolidWorks bridge",
+    "text": "20+ tools over the COM API: native features, BSI A3 drawings, assemblies with mates, and static, modal, thermal and Flow studies."
+   },
+   {
+    "title": "Fusion bridge",
+    "text": "An add-in that takes commands over localhost to import, colour, pose and screenshot assemblies. Its masses match SolidWorks exactly."
+   }
+  ],
+  "data": [
+   [
+    "Built",
+    "October 2026"
+   ],
+   [
+    "Code",
+    "10,000+ lines of Python"
+   ],
+   [
+    "CAD",
+    "build123d, SolidWorks 2025/26, Fusion"
+   ],
+   [
+    "Solvers",
+    "SW Simulation, SW Flow, SU2, own FEM"
+   ],
+   [
+    "Benchmarks passed",
+    "9 of 9"
+   ],
+   [
+    "Designs run through it",
+    "7"
+   ]
+  ],
+  "mine": [
+   "Set out what it had to do: brief in, checked design out, in the desktop CAD packages engineers actually use.",
+   "Built it with Claude Code, directing the agents and testing each stage before moving on.",
+   "Required a textbook benchmark for every solver before it touched a real design."
+  ],
+  "checksTitle": "Benchmarks: every solver path against a known answer",
+  "checks": [
+   [
+    "Steel cantilever, tip load",
+    "SW static",
+    "deflection · stress",
+    "beam theory",
+    "+0.1 % · −4 %"
+   ],
+   [
+    "Cantilever, first mode",
+    "SW modal",
+    "815.2 Hz",
+    "816.5 Hz",
+    "−0.2 %"
+   ],
+   [
+    "Bar tip temperature",
+    "SW thermal",
+    "84.92 °C",
+    "84.88 °C",
+    "+0.05 %"
+   ],
+   [
+    "Convecting fin tip",
+    "SW thermal",
+    "68.74 °C",
+    "68.7 °C",
+    "+0.06 %"
+   ],
+   [
+    "Heated sphere in 2 m/s air",
+    "SW Flow",
+    "ΔT 20.99 K",
+    "21.17 K (Whitaker)",
+    "−0.8 %"
+   ],
+   [
+    "Crank-slider position",
+    "SW mates + motion",
+    "slider x",
+    "slider-crank theory",
+    "0.0005 mm"
+   ],
+   [
+    "Plate mass",
+    "Fusion bridge",
+    "mass",
+    "SolidWorks",
+    "exact"
+   ],
+   [
+    "Transonic diffuser shock (Sajben)",
+    "SU2 RANS-SST",
+    "shock x/H* 2.25",
+    "2.25 (Bogar 1983)",
+    "wall p within 3 %"
+   ],
+   [
+    "Solenoid field, axisymmetric",
+    "own FEM",
+    "B on axis",
+    "analytic",
+    "−0.13 %"
+   ]
+  ],
+  "figs": [
+   {
+    "src": "img/val_mode1.jpg",
+    "size": "",
+    "caption": "**Cantilever first mode, 815.2 Hz** against 816.5 Hz from beam theory. Set up, solved and plotted entirely through the bridge."
+   },
+   {
+    "src": "img/val_sajben.jpg",
+    "size": "",
+    "caption": "**Sajben transonic diffuser** (NASA NPARC case). Simulated wall pressure as lines, measured as circles."
+   }
+  ],
+  "notesTitle": "What went wrong, and what changed because of it",
+  "notes": [
+   {
+    "title": "Loads applied four times",
+    "text": "A tank came back at four times the expected stress. Face selection was returning duplicates, so every pressure was applied once per copy. After deduplication: 56 MPa against a 45 MPa hand calc. Every study now gets a hand calc."
+   },
+   {
+    "title": "An intake that only looked started",
+    "text": "Off-design runs were first called started because they swallowed the design mass flow. Below Mach 3 the spillage hides that. The right test is the Mach number just ahead of the cowl lip, and it was subsonic, so the report was corrected."
+   },
+   {
+    "title": "Meshes that never finish",
+    "text": "A knuckle mesh ran for 7.9 hours and failed. The pipeline now estimates element count before meshing and falls back to a simpler model when needed."
+   },
+   {
+    "title": "Questioning the brief",
+    "text": "On the aerospike, the brief's mixture ratio and fuel flow disagreed, and no cooling layout could close the heat balance. Finding that on paper is the point."
+   }
+  ]
+ },
+ "sheets": [
+  {
+   "title": "Formula Student drivetrain",
+   "scale": "EUFS 2027 car · concept",
+   "desc": "A chain-drive rear powertrain package for the university team's 2027 electric car: motor cradle, outrigger bearing, eccentric diff carriers, sprocket and half-shafts, built as a full SolidWorks assembly.",
+   "hero": [
+    {
+     "src": "img/fs_full_iso.jpg",
+     "size": "",
+     "caption": "**Rear drivetrain, rev B.** EMRAX 228 motor, 13:42 chain reduction, limited-slip diff on eccentric carriers, half-shafts to the wheels. 75 components, clash-free."
+    }
+   ],
+   "data": [
+    [
+     "Reduction",
+     "13:42 (3.23)"
+    ],
+    [
+     "Diff torque, design",
+     "1,066 N·m (×1.5 shock)"
+    ],
+    [
+     "Chain pull, design",
+     "9.95 kN"
+    ],
+    [
+     "Half-shaft",
+     "30 × 20 mm 4340 tube"
+    ],
+    [
+     "Half-shaft FoS",
+     "1.98 static · 1.71 fatigue"
+    ],
+    [
+     "Diff plate FoS on yield",
+     "7.5"
+    ]
+   ],
+   "verdict": "Every mount passes. The 42-tooth sprocket's window corners set the limit, at a yield FoS of 1.32 after rev B, so the next step is a thicker or solid web. This is a concept for my subteam, not the final car.",
+   "report": "",
+   "mine": [
+    "Mechanical powertrain engineer on Edinburgh University Formula Student (EUFS).",
+    "Set the brief: the most developed drivetrain package possible that fits the FS rules and gives the chassis team sensible hardpoints.",
+    "Supplied the team's decisions on the bought-in motor, diff and inverter."
+   ],
+   "pipe": [
+    "Motor cradle, outrigger, diff carriers, sprocket and half-shaft CAD, assembled natively in SolidWorks 2026.",
+    "Hand calcs for shafts, splines, bolts and bearings; CalculiX FEA of the plates and sprocket."
+   ],
+   "cols": "2",
+   "plates": [
+    {
+     "src": "img/fs_fea_plate.jpg",
+     "size": "",
+     "pdf": "1",
+     "caption": "**Diff carrier side plate under chain pull** (CalculiX, 7075-T6). Peak 67 MPa, FoS 7.5 on yield; deformation ×400."
+    },
+    {
+     "src": "img/fs_chain_side.jpg",
+     "size": "",
+     "caption": "**Chain side.** 520 chain seated on ISO 606 tooth forms around the 6-spoke 7075 sprocket."
+    },
+    {
+     "src": "img/fs_fea_outrigger.jpg",
+     "size": "",
+     "caption": "**Motor outrigger,** same load case: peak 23 MPa, so it has mass to lose."
+    },
+    {
+     "src": "img/fs_drivetrain_iso.jpg",
+     "size": "",
+     "caption": "**Motor, chain and diff,** wheels hidden."
+    }
+   ]
+  },
+  {
+   "title": "Hall-effect thruster",
+   "scale": "700 W, krypton · Endeavour",
+   "desc": "A Hall thruster for Project Xenith, the Edinburgh University rocketry society's plan to fire a student-built thruster at Race 2 Space. Boron nitride channel, iron magnetic circuit with five coils, heaterless hollow cathode.",
+   "hero": [
+    {
+     "src": "img/xen_section.jpg",
+     "size": "",
+     "caption": "**Quarter section.** BN discharge channel, stainless anode and gas distributor, Armco iron poles and coils, cathode tilted 20°."
+    }
+   ],
+   "data": [
+    [
+     "Power",
+     "700 W"
+    ],
+    [
+     "Propellant",
+     "Krypton"
+    ],
+    [
+     "Channel",
+     "OD 68 / ID 48 mm"
+    ],
+    [
+     "Peak radial field",
+     "200 G"
+    ],
+    [
+     "Field model vs analytic",
+     "−0.13 %"
+    ],
+    [
+     "Anode temperature, est.",
+     "~665 °C"
+    ]
+   ],
+   "verdict": "The thermal network puts the inner coil at about 400 °C, well past polyimide-insulated wire, so it needs ceramic-insulated wire. Hardware tests come next: cold flow, field mapping and the cathode.",
+   "report": "",
+   "mine": [
+    "Thermal-mechanical engineer on Project Xenith, a 13-student team in Endeavour.",
+    "Set the brief: a detailed SolidWorks thruster model in the SPT-70 class, with magnetics and thermal checks."
+   ],
+   "pipe": [
+    "Sizing from scaling laws, SolidWorks parts and assembly, bill of materials.",
+    "Axisymmetric magnetics FEM checked against an analytic solenoid; radiation and conduction thermal network.",
+    "Cold-flow test rig design."
+   ],
+   "cols": "2",
+   "plates": [
+    {
+     "src": "img/xen_field_inner.jpg",
+     "size": "",
+     "pdf": "1",
+     "caption": "**Magnetic field, inner coil only.** Own axisymmetric FEM: flux lines over field strength, used to place the 200 G peak just inside the exit."
+    },
+    {
+     "src": "img/xen_iso.jpg",
+     "size": "",
+     "caption": "**Thruster assembly.** Square iron back plate, four corner cores, cathode on its bracket."
+    },
+    {
+     "src": "img/xen_rig_section.jpg",
+     "size": "",
+     "caption": "**Cold-flow test rig, quarter section.** Checks the anode's gas distribution with nitrogen before any plasma test."
+    },
+    {
+     "src": "img/xen_half_section.jpg",
+     "size": "",
+     "caption": "**Half section with flux lines** and key dimensions, from the magnetics model."
+    }
+   ]
+  },
+  {
+   "title": "Supersonic intake",
+   "scale": "Mach 1.6 to 3.0",
+   "desc": "An air intake that changes shape across its speed range so the engine always gets slowed, high-pressure air.",
+   "hero": [
+    {
+     "src": "img/intake_cutaway.jpg",
+     "size": "",
+     "caption": "**Mach 3 configuration, sidewall removed.** Two variable ramps on ganged ballscrews, bleed plate behind the third ramp, aft ramp on a roller track."
+    },
+    {
+     "src": "img/intake_schlieren_sweep.jpg",
+     "size": "",
+     "caption": "**Simulated schlieren, Mach 1.6 to 3.0.** The ramps close as speed rises and the shocks line up on the cowl lip."
+    }
+   ],
+   "data": [
+    [
+     "Capture area",
+     "200 × 300 mm"
+    ],
+    [
+     "Ramps",
+     "3 (2 variable)"
+    ],
+    [
+     "Pressure recovery, Mach 3",
+     "0.833 (MIL spec 0.809)"
+    ],
+    [
+     "Actuator surge load",
+     "12.9 kN"
+    ],
+    [
+     "Ramp 3 stress, p99",
+     "136 MPa"
+    ]
+   ],
+   "verdict": "Meets the spec at Mach 3. At Mach 2.0 and 2.4 it falls short because the cowl lip is fixed; a moving lip is the next step.",
+   "report": "",
+   "mine": [
+    "Wrote the brief: Mach 1.6–3.0, moving ramps on ballscrews, seals, bleed plate, bypass door, then CFD and thermo-mechanical FEA.",
+    "Allowed changes to the brief where they helped, which led to three ramps."
+   ],
+   "pipe": [
+    "Shock schedule, CAD and Fusion assembly, clash checks.",
+    "SU2 CFD across the range, validated on the Sajben case first; ramp FEA and actuator hand calcs."
+   ],
+   "cols": "2",
+   "plates": [
+    {
+     "src": "img/intake_schedule.gif",
+     "size": "span2",
+     "caption": "**Ramp schedule, Mach 1.6 to 3.0,** clash-checked at every frame."
+    },
+    {
+     "src": "img/intake_rans_throat.jpg",
+     "size": "",
+     "caption": "**Throat, viscous model.** The bleed slot runs as a supersonic jet; a separation bubble forms behind the throat.",
+     "pdf": "1"
+    },
+    {
+     "src": "img/intake_fea_side.jpg",
+     "size": "",
+     "caption": "**Ramp 3 under an engine surge.** 1.8 mm peak deflection, drawn 15× true size."
+    },
+    {
+     "src": "img/intake_sweep_poster.jpg",
+     "size": "",
+     "caption": "**Mach number from 1.6 to 3.0,** ramps scheduled for each speed (SU2, Euler)."
+    },
+    {
+     "src": "img/intake_fea_under.jpg",
+     "size": "",
+     "caption": "**Ramp 3 from below:** load runs from the skin into the ribs and out through the actuator-lug bulkheads."
+    }
+   ]
+  },
+  {
+   "title": "Rocket hop vehicle",
+   "scale": "VTVL, electric pump-fed",
+   "desc": "A vertical take-off and landing test vehicle built around the aerospike on Sheet 6.",
+   "hero": [
+    {
+     "src": "img/hop_demo.gif",
+     "size": "",
+     "caption": "**Simulated flight.** Climb to 100 m, hover, move 50 m sideways through a gusting crosswind, land. Every number on screen comes from the flight-sim log."
+    }
+   ],
+   "data": [
+    [
+     "Take-off mass",
+     "242 kg"
+    ],
+    [
+     "Thrust to weight",
+     "1.62"
+    ],
+    [
+     "Hop apogee",
+     "101.6 m"
+    ],
+    [
+     "Landing error",
+     "2.0 m"
+    ],
+    [
+     "Parts in Fusion",
+     "45"
+    ]
+   ],
+   "verdict": "Every structure passes with margin. The oxygen pump gets only 1.34× the suction head it needs, so it needs an inducer.",
+   "report": "",
+   "mine": [
+    "Set the brief: build a flying vehicle around the aerospike and gimbal, with a flight demo and full FEA and CFD.",
+    "Chose the concept: a hop vehicle with electric pumps, designed in Fusion and checked in SolidWorks."
+   ],
+   "pipe": [
+    "Sizing, 45-part Fusion assembly, 3-DOF flight sim with attitude control.",
+    "FEA of thrust structure, tank and legs; crosswind and feed-line CFD."
+   ],
+   "cols": "3",
+   "plates": [
+    {
+     "src": "img/hopper_fea_thrust.jpg",
+     "size": "",
+     "caption": "**Thrust structure** at full thrust, 6° gimbal: 21.4 MPa, FoS 12.8."
+    },
+    {
+     "src": "img/hopper_fea_lox.jpg",
+     "size": "",
+     "caption": "**Oxygen tank at proof:** 56 MPa against a 45 MPa hand calc."
+    },
+    {
+     "src": "img/hopper_fea_leg.jpg",
+     "size": "",
+     "caption": "**Landing leg,** two-leg touchdown with side load: tubes under 60 MPa."
+    },
+    {
+     "src": "img/hopper_aero.jpg",
+     "size": "span2",
+     "pdf": "1",
+     "caption": "**Crosswind at 7 m/s** (SolidWorks Flow): 19.5 N·m of upsetting moment against 273 N·m of gimbal authority."
+    }
+   ]
+  },
+  {
+   "title": "Aerospike engine",
+   "scale": "5 kN, LOX / RP-1",
+   "desc": "An annular aerospike on a gimbal that steers it 6° in any direction.",
+   "hero": [
+    {
+     "src": "img/as5_mach.jpg",
+     "size": "",
+     "caption": "**Exhaust plume at sea level.** The flow re-compresses onto the truncated spike, which is how an aerospike adapts to altitude."
+    }
+   ],
+   "data": [
+    [
+     "Thrust, sea level",
+     "3.83 kN"
+    ],
+    [
+     "Thrust, altitude",
+     "5.0 kN"
+    ],
+    [
+     "Gimbal FoS",
+     "3.4"
+    ],
+    [
+     "First mode",
+     "66 Hz"
+    ]
+   ],
+   "verdict": "Structurally sound, thermally not. Regen cooling can carry 0.46 MW against 0.9 MW in, so the cooling concept has to change.",
+   "report": "",
+   "mine": [
+    "Wrote the brief: a 5 kN annular aerospike with regenerative cooling and a gimballed mount, every relevant study in one overnight run."
+   ],
+   "pipe": [
+    "Engine and two-ring gimbal CAD, kinematics, actuator sizing.",
+    "Plume CFD checked against Angelino's method; gimbal FEA and modal; cooling optimiser."
+   ],
+   "cols": "2",
+   "plates": [
+    {
+     "src": "img/gimbal_cone.gif",
+     "size": "",
+     "caption": "**Gimbal sweep.** The full 6° cone without clashing; stroke and force from the kinematic model."
+    },
+    {
+     "src": "img/as5_gimbal_vm.jpg",
+     "size": "",
+     "caption": "**Gimbal at 10 g sideways.** Strong enough, but 0.82 mm deflection against a 0.5 mm limit."
+    },
+    {
+     "src": "img/as5_schlieren.jpg",
+     "size": "",
+     "pdf": "1",
+     "caption": "**Shock cells behind the spike base** (simulated schlieren). Wall pressures match Angelino's design method."
+    },
+    {
+     "src": "img/as5_gimbal_mode.jpg",
+     "size": "",
+     "caption": "**First mode, 66 Hz.** The engine rocks on the gimbal rings."
+    }
+   ]
+  },
+  {
+   "title": "EV corner module",
+   "scale": "7075-T6",
+   "desc": "A lightweight steering knuckle and in-wheel motor mount, shaped by topology optimisation.",
+   "hero": [
+    {
+     "src": "img/ev_outboard.jpg",
+     "size": "",
+     "caption": "**Corner assembly.** Wishbones, coilover, ventilated disc, caliper, hub, coolant and high-voltage lines."
+    }
+   ],
+   "data": [
+    [
+     "Knuckle mass",
+     "2.13 kg"
+    ],
+    [
+     "Bearing L10 life",
+     "8,690 h"
+    ],
+    [
+     "Bump steer",
+     "\u003c 0.1°"
+    ],
+    [
+     "Bearing seat",
+     "49–64 °C"
+    ]
+   ],
+   "verdict": "Geometry and kinematics are done. The final stress check is paused after the mesher failed on the organic shape.",
+   "report": "",
+   "mine": [
+    "Wrote the brief: size a knuckle and motor mount from load cases, check bearing life and kinematics, optimise the shape, build the full corner."
+   ],
+   "pipe": [
+    "6-DOF suspension kinematics, a custom 3-D topology optimiser, the rebuilt knuckle.",
+    "33-part Fusion assembly and coolant-gallery heat transfer."
+   ],
+   "cols": "2",
+   "plates": [
+    {
+     "src": "img/suspension_bump.gif",
+     "size": "",
+     "caption": "**Bump and rebound.** Every frame is posed by the kinematic solver, not keyframed."
+    },
+    {
+     "src": "img/ev_topo.jpg",
+     "size": "",
+     "caption": "**Topology optimisation,** then rebuilt as CAD from checked members around the bearing, ball joints and steering arm."
+    },
+    {
+     "src": "img/ev_cht.jpg",
+     "size": "",
+     "pdf": "1",
+     "caption": "**Motor-seat cooling** (SolidWorks Flow, conjugate heat transfer): 800 W of stator heat keeps the seat between 40 and 63 °C."
+    }
+   ]
+  }
+ ]
+}
+</script>
+<script id="app-js">
+(function(){
+var SRC=document.getElementById('data').textContent;
+var D=JSON.parse(SRC), S=JSON.parse(SRC);
+var editing=false, dirty=false, canEdit=false, art=null, assets=null, msg='';
+var LIB=["fs_full_iso.jpg","fs_drivetrain_iso.jpg","fs_chain_side.jpg","fs_rear_quarter.jpg","fs_fea_plate.jpg","fs_fea_outrigger.jpg","xen_section.jpg","xen_iso.jpg","xen_half_section.jpg","xen_field_inner.jpg","xen_rig_section.jpg","intake_sweep_poster.jpg","intake_cutaway.jpg","intake_schlieren_sweep.jpg","intake_schedule.gif","intake_m16_side.jpg","intake_mach_sweep.gif","intake_m3_mach.jpg","intake_rans_throat.jpg","intake_fea_side.jpg","intake_fea_under.jpg",
+ "hop_demo.gif","hopper_iso.jpg","hopper_bay.jpg","hopper_flight.jpg","hopper_aero.jpg","hopper_fea_thrust.jpg","hopper_fea_lox.jpg","hopper_fea_leg.jpg",
+ "as5_mach.jpg","as5_schlieren.jpg","as5_wallp.jpg","as5_cutaway.jpg","gimbal_cone.gif","as5_gimbal_vm.jpg","as5_gimbal_mode.jpg","as5_regen.jpg",
+ "ev_outboard.jpg","ev_inboard.jpg","ev_exploded.gif","suspension_bump.gif","steering_lock.gif","ev_topo.jpg","ev_knuckle.jpg","ev_cht.jpg","ev_hardpoints.jpg",
+ "nema_drawing.jpg","nema_stress.jpg","crank_slider.gif","val_cantilever.jpg","val_mode1.jpg","val_sphere.jpg","val_sajben.jpg"];
+var RESET=':root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}';
+var HEAD='<title>Matty Aldridge Engineering</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">\n';
+var MULTI=/desc|intro|verdict|caption|text|mine|pipe/;
+var app=document.getElementById('app');
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function fmt(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');}
+function plain(s){return String(s||'').replace(/\*\*/g,'');}
+function get(p){return p.split('.').reduce(function(o,k){return o==null?o:o[k];},S);}
+function setp(p,v){var ks=p.split('.'),last=ks.pop();ks.reduce(function(o,k){return o[k];},S)[last]=v;}
+function T(p,tag,cls){tag=tag||'span';var v=get(p);
+  if(!editing&&(v==null||v===''))return '';
+  return '<'+tag+(cls?' class="'+cls+'"':'')+' data-p="'+p+'"'+(editing?' contenteditable="plaintext-only" spellcheck="true"':'')+'>'+(editing?esc(v):fmt(v))+'</'+tag+'>';}
+function C(arr,i){if(!editing)return '';return '<span class="ctl" data-arr="'+arr+'" data-i="'+i+'"><button type="button" data-a="up" aria-label="Move up">↑</button><button type="button" data-a="down" aria-label="Move down">↓</button><button type="button" data-a="del" aria-label="Remove">✕</button></span>';}
+function ADD(arr,tpl,label){if(!editing)return '';return '<button type="button" class="add" data-add="'+arr+'" data-tpl="'+esc(JSON.stringify(tpl))+'">+ '+label+'</button>';}
+function SEL(p,opts,label){var v=get(p);var o=Object.assign({},opts);if(v!=null&&!(v in o))o[v]=v.indexOf('/_blob/')===0?'Uploaded image':v;
+  return '<select data-sel="'+p+'" aria-label="'+esc(label||'Choose')+'">'+Object.keys(o).map(function(k){return '<option value="'+esc(k)+'"'+(k===v?' selected':'')+'>'+esc(o[k])+'</option>';}).join('')+'</select>';}
+function imgOpts(){var o={};LIB.forEach(function(f){o['img/'+f]=f;});return o;}
+
+function fig(base,i,num,sizes){
+  var f=get(base)[i],p=base+'.'+i;
+  var ctl=editing?'<span class="ctl" data-arr="'+base+'" data-i="'+i+'">'+SEL(p+'.src',imgOpts(),'Image')+(sizes?SEL(p+'.size',sizes,'Width')+SEL(p+'.pdf',{'':'Web only','1':'Web + PDF'},'Show in PDF'):'')+
+    (assets?'<button type="button" data-up="'+p+'.src">Upload</button>':'')+'<button type="button" data-a="up" aria-label="Move earlier">←</button><button type="button" data-a="down" aria-label="Move later">→</button><button type="button" data-a="del" aria-label="Remove figure">✕</button></span>':'';
+  return '<figure class="'+esc(f.size||'')+(f.pdf?' inpdf':'')+'">'+ctl+'<img loading="lazy" src="'+esc(f.src)+'" alt="'+esc(plain(f.caption).split('.')[0])+'">'+
+    '<figcaption><span class="fn">'+num+'</span>'+T(p+'.caption')+'</figcaption></figure>';
+}
+var NEWFIG={src:'img/hopper_iso.jpg',size:'',caption:'**New figure.** Write a caption.'};
+function list(base,cls){var a=get(base)||[];
+  return '<ul'+(cls?' class="'+cls+'"':'')+'>'+a.map(function(x,i){return '<li>'+C(base,i)+T(base+'.'+i)+'</li>';}).join('')+'</ul>'+ADD(base,'New line','Add line');}
+function dataTable(base){var a=get(base)||[];
+  return '<table class="pl"><caption>Data</caption>'+a.map(function(r,i){return '<tr><th>'+C(base,i)+T(base+'.'+i+'.0')+'</th><td>'+T(base+'.'+i+'.1')+'</td></tr>';}).join('')+'</table>'+ADD(base,['Quantity','Value'],'Add row');}
+
+function header(){var m=S.meta, n=S.sheets.length+1;
+  return '<header class="tb" aria-label="Title block">'+
+   '<div class="name"><h1>'+T('meta.name1')+T('meta.name2')+'</h1><span><span class="l">Title</span><span class="v">'+T('meta.docTitle')+'</span></span></div>'+
+   '<div><span class="l">Discipline</span><span class="v">'+T('meta.discipline')+'</span></div>'+
+   '<div class="r"><span class="l">Institution</span><span class="v">'+T('meta.institution')+'</span></div>'+
+   '<div><span class="l">Focus</span><span class="v">'+T('meta.focus')+'</span></div>'+
+   '<div class="r"><span class="l">Location</span><span class="v">'+T('meta.location')+'</span></div>'+
+   '<div class="wide r"><span class="l">Contact</span><span class="v">'+(editing?T('meta.email')+'<br>LinkedIn URL: '+T('meta.linkedin'):
+     '<span class="email">'+esc(m.email)+'</span><button class="copy" id="copy-email" type="button">Copy</button>'+(m.linkedin?'<br><a href="'+esc(m.linkedin)+'" target="_blank" rel="noopener">LinkedIn</a>':'')+(m.pdf?' · <a href="'+esc(m.pdf)+'">PDF version</a>':''))+'</span></div>'+
+   '<div class="b proj-sym"><svg width="54" height="26" viewBox="0 0 54 26" role="img" aria-label="First-angle projection symbol"><g fill="none" stroke="#111" stroke-width="1.4"><path d="M3 7 L19 3 L19 23 L3 19 Z"/><line x1="1" y1="13" x2="21" y2="13" stroke-dasharray="4 2"/><circle cx="40" cy="13" r="10"/><circle cx="40" cy="13" r="5"/><line x1="26" y1="13" x2="53" y2="13" stroke-dasharray="4 2"/></g></svg><span><span class="l">Projection</span><span class="v">First angle</span></span></div>'+
+   '<div class="b"><span class="l">Date · Rev</span><span class="v">'+T('meta.date')+'</span></div>'+
+   '<div class="b r"><span class="l">Sheets</span><span class="v">'+n+'</span></div></header>'+
+   m.intro.map(function(x,i){return '<div class="intro">'+C('meta.intro',i)+T('meta.intro.'+i,'p')+'</div>';}).join('')+ADD('meta.intro','New paragraph.','Add paragraph')+
+   '<nav class="toc" aria-label="Sheets"><a href="#s1"><span class="l">Sheet 1 · '+esc(S.tool.toc)+'</span><span class="v">'+esc(S.tool.title)+'</span></a>'+
+   S.sheets.map(function(s,i){return '<a href="#s'+(i+2)+'"><span class="l">Sheet '+(i+2)+'</span><span class="v">'+esc(s.title)+'</span></a>';}).join('')+'</nav>';
+}
+
+function flowSvg(){
+  return '<div class="flow"><svg viewBox="0 0 1000 300" role="img" aria-label="Pipeline: the brief goes to a designer, then a reviewer that sends fixes back, then an operator that drives SolidWorks and Fusion, and the results go to a report checked against hand calculations. Own solvers feed the report directly.">'+
+  '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#111"/></marker></defs>'+
+  '<g stroke="#111" stroke-width="1.6" fill="none" marker-end="url(#ar)"><path d="M152 140H178"/><path d="M330 140H356"/><path d="M508 140H534"/><path d="M440 108C440 62 262 62 262 104"/>'+
+  '<path d="M666 128C690 128 690 62 708 62"/><path d="M666 152C690 152 690 218 708 218"/><path d="M866 62C890 62 896 108 906 116"/><path d="M866 218C890 218 896 172 906 164"/><path d="M254 172V262H951V176" stroke-dasharray="6 5"/></g>'+
+  '<text x="351" y="68" font-size="13" font-style="italic" fill="#4a4a4a" text-anchor="middle">fixes</text><rect x="372" y="246" width="232" height="32" fill="#fff"/>'+
+  '<text x="488" y="267" font-size="13" fill="#4a4a4a" text-anchor="middle">own solvers: SU2 CFD · topology opt · flight sim</text>'+
+  '<g font-size="16" font-weight="700" fill="#111"><rect x="10" y="108" width="142" height="64" fill="#111" stroke="#111"/><text x="24" y="135" fill="#fff">THE BRIEF</text>'+
+  '<rect x="180" y="108" width="150" height="64" fill="#fff" stroke="#111" stroke-width="1.6"/><text x="194" y="135">DESIGNER</text>'+
+  '<rect x="358" y="108" width="150" height="64" fill="#fff" stroke="#111" stroke-width="1.6"/><text x="372" y="135">REVIEWER</text>'+
+  '<rect x="536" y="108" width="130" height="64" fill="#fff" stroke="#111" stroke-width="1.6"/><text x="550" y="135">OPERATOR</text>'+
+  '<rect x="710" y="30" width="156" height="64" fill="#fff" stroke="#111" stroke-width="1.6"/><text x="724" y="57">SOLIDWORKS</text>'+
+  '<rect x="710" y="186" width="156" height="64" fill="#fff" stroke="#111" stroke-width="1.6"/><text x="724" y="213">FUSION</text>'+
+  '<rect x="906" y="108" width="88" height="64" fill="#111" stroke="#111"/><text x="918" y="135" fill="#fff">REPORT</text></g>'+
+  '<g font-size="12.5" fill="#4a4a4a"><text x="24" y="156" fill="#ddd">plain English</text><text x="194" y="156">hand calcs + build123d</text><text x="372" y="156">views · mass · clashes</text>'+
+  '<text x="550" y="156">drives the apps</text><text x="724" y="78">parts · drawings · FEA · CFD</text><text x="724" y="234">assemblies · motion</text><text x="918" y="156" fill="#ddd">vs hand calc</text></g></svg></div>';
+}
+
+function tool(){var t=S.tool,b='tool';
+  return '<section class="view" id="s1" aria-labelledby="h1"><div class="vh"><span class="tag">Sheet 1</span>'+T('tool.title','h2').replace('<h2','<h2 id="h1"')+T('tool.scale','span','scale')+'</div>'+
+   '<div class="vbody"><div>'+T('tool.desc','p','desc')+
+     '<div class="cols3">'+t.cols.map(function(c,i){return '<div>'+C('tool.cols',i)+T('tool.cols.'+i+'.title','h3')+T('tool.cols.'+i+'.text','p')+'</div>';}).join('')+'</div>'+ADD('tool.cols',{title:'Heading',text:'Text'},'Add column')+
+   '</div><div>'+dataTable('tool.data')+'<div class="split one"><div><span class="l">My part</span>'+list('tool.mine')+'</div></div></div></div>'+flowSvg()+
+   T('tool.checksTitle','p','sub')+
+   '<div class="checks"><table><thead><tr><th>Test</th><th>Solver</th><th>Result</th><th>Reference</th><th>Error</th></tr></thead><tbody>'+
+   t.checks.map(function(r,i){return '<tr>'+r.map(function(c,j){return '<td'+(j===2||j===4?' class="n"':'')+'>'+(j===0?C('tool.checks',i):'')+T('tool.checks.'+i+'.'+j)+'</td>';}).join('')+'</tr>';}).join('')+
+   '</tbody></table></div>'+ADD('tool.checks',['Test','Solver','Result','Reference','Error'],'Add benchmark')+
+   '<div class="plates">'+t.figs.map(function(f,i){return fig('tool.figs',i,'1.'+(i+1),{'':'Half width',span2:'Full width'});}).join('')+'</div>'+ADD('tool.figs',NEWFIG,'Add figure')+
+   T('tool.notesTitle','p','sub')+
+   '<ul class="notes">'+t.notes.map(function(n,i){return '<li><span class="k">'+(i+1)+'</span><div>'+C('tool.notes',i)+T('tool.notes.'+i+'.title','h3')+'</div>'+T('tool.notes.'+i+'.text','p')+'</li>';}).join('')+'</ul>'+
+   ADD('tool.notes',{title:'What went wrong',text:'What happened and what changed.'},'Add item')+
+  '</section>';
+}
+
+function sheet(s,i){var b='sheets.'+i,no=i+2,k=0;
+  var sizes=s.cols==='3'?{'':'One column',span2:'Full width'}:{'':'Half width',span2:'Full width'};
+  var heroHtml=s.hero.map(function(f,j){return fig(b+'.hero',j,no+'.'+(++k),null);}).join('');
+  var heroBlock=s.hero.length>1||editing?'<div class="stack">'+heroHtml+ADD(b+'.hero',NEWFIG,'Add main figure')+'</div>':heroHtml;
+  var platesHtml=s.plates.map(function(f,j){return fig(b+'.plates',j,no+'.'+(++k),sizes);}).join('');
+  return '<section class="view" id="s'+no+'" aria-labelledby="h'+no+'"><div class="vh"><span class="tag">Sheet '+no+'</span>'+
+     (editing?C('sheets',i):'')+T(b+'.title','h2').replace('<h2','<h2 id="h'+no+'"')+T(b+'.scale','span','scale')+'</div>'+
+   '<div class="vbody">'+heroBlock+'<div>'+T(b+'.desc','p','desc')+dataTable(b+'.data')+T(b+'.verdict','p','verdict')+
+     (editing?'<p class="more">Report URL: '+T(b+'.report')+'</p>':(s.report?'<p class="more"><a href="'+esc(s.report)+'" target="_blank" rel="noopener">Full report</a></p>':''))+'</div></div>'+
+   '<div class="split"><div><span class="l">My part</span>'+list(b+'.mine')+'</div><div><span class="l">Produced by the pipeline</span>'+list(b+'.pipe')+'</div></div>'+
+   (s.plates.length||editing?'<div class="plates'+(s.cols==='3'?' c3':'')+'">'+platesHtml+'</div>':'')+
+   (editing?'<div class="edit-row">'+ADD(b+'.plates',NEWFIG,'Add figure')+'<span class="ctl">Columns '+SEL(b+'.cols',{'2':'2','3':'3'},'Figure columns')+'</span></div>':'')+
+  '</section>';
+}
+
+function render(){
+  document.body.classList.toggle('editing',editing);
+  app.innerHTML='<div class="sheet">'+header()+tool()+S.sheets.map(sheet).join('')+
+   (editing?ADD('sheets',{title:'New project',scale:'One-line spec',desc:'What it is.',hero:[NEWFIG],data:[['Quantity','Value']],verdict:'Where it stands.',report:'',mine:['What I did.'],pipe:['What the pipeline did.'],cols:'2',plates:[]},'Add sheet'):'')+
+   '<footer>'+T('meta.foot.0','span')+T('meta.foot.1','span')+'</footer></div>';
+  var cb=document.getElementById('copy-email');
+  if(cb)cb.addEventListener('click',function(){var t=S.meta.email;
+    function sel(){var r=document.createRange();r.selectNodeContents(document.querySelector('.email'));var x=getSelection();x.removeAllRanges();x.addRange(r);}
+    try{navigator.clipboard.writeText(t).then(function(){cb.textContent='Copied';},function(){sel();cb.textContent='Selected';});}catch(err){sel();cb.textContent='Selected';}});
+}
+
+/* ---- editing ---- */
+function markDirty(){dirty=true;try{sessionStorage.setItem('mae-draft',JSON.stringify(S));}catch(e){}bar();}
+app.addEventListener('input',function(e){var el=e.target.closest('[data-p]');if(!el||!editing)return;setp(el.dataset.p,el.innerText.replace(/\n+$/,''));markDirty();});
+app.addEventListener('keydown',function(e){var el=e.target.closest('[data-p]');if(el&&e.key==='Enter'&&!MULTI.test(el.dataset.p)){e.preventDefault();el.blur();}});
+app.addEventListener('focusout',function(e){if(editing&&e.target.closest('[data-p]')&&/title|toc/.test(e.target.dataset.p||'')){var y=scrollY;render();scrollTo(0,y);}});
+app.addEventListener('change',function(e){var s=e.target.closest('[data-sel]');if(!s)return;setp(s.dataset.sel,s.value);markDirty();render();});
+app.addEventListener('click',function(e){
+  if(!editing)return;
+  if(e.target.closest('a'))e.preventDefault();
+  var add=e.target.closest('[data-add]');
+  if(add){get(add.dataset.add).push(JSON.parse(add.dataset.tpl));markDirty();render();return;}
+  var up=e.target.closest('[data-up]');
+  if(up){pick(up.dataset.up);return;}
+  var btn=e.target.closest('.ctl button[data-a]');if(!btn)return;
+  var c=btn.closest('.ctl'),arr=get(c.dataset.arr),i=+c.dataset.i,a=btn.dataset.a;
+  if(a==='del')arr.splice(i,1);
+  else if(a==='up'&&i>0)arr.splice(i-1,0,arr.splice(i,1)[0]);
+  else if(a==='down'&&i<arr.length-1)arr.splice(i+1,0,arr.splice(i,1)[0]);
+  markDirty();render();
+});
+function pick(path){
+  var inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;msg='Uploading '+f.name+'…';bar();
+    assets.upload(f).then(function(r){setp(path,'/_blob/'+r.id);msg='';markDirty();render();},
+      function(err){msg='Upload failed ('+((err&&err.code)||'error')+'). Try a JPG or PNG under 20 MB.';bar();});};
+  inp.click();
+}
+
+function build(){
+  var json=JSON.stringify(S,null,1).replace(/</g,'\\u003c');
+  var css=document.getElementById('css').textContent, js=document.getElementById('app-js').textContent;
+  return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+RESET+'</style></head><body>'+
+    HEAD+'<style id="css">'+css+'</style>\n<div id="app"></div>\n<script type="application/json" id="data">\n'+json+'\n<\/script>\n<script id="app-js">'+js+'<\/script>\n</body></html>';
+}
+
+var barEl=document.createElement('div');barEl.id='bar';barEl.hidden=true;document.body.appendChild(barEl);
+function readDraft(){try{var d=sessionStorage.getItem('mae-draft');if(!d)return null;if(d===SRC||d===JSON.stringify(D)){sessionStorage.removeItem('mae-draft');return null;}return d;}catch(e){return null;}}
+function bar(){
+  if(!canEdit){barEl.hidden=true;return;}
+  barEl.hidden=false;
+  if(!editing){var draft=readDraft();
+    barEl.innerHTML=(msg?'<span class="msg">'+esc(msg)+'</span>':'')+(draft?'<button type="button" data-b="restore">Restore unsaved edits</button>':'')+'<button type="button" class="pri" data-b="edit">Edit page</button>';
+  }else{
+    barEl.innerHTML='<span class="msg">'+esc(msg||(dirty?'Unsaved changes':'Click any blue-outlined text to edit · **word** makes it bold'))+'</span><button type="button" data-b="cancel">Cancel</button><button type="button" class="pri" data-b="save"'+(dirty?'':' disabled')+'>Save</button>';
+  }
+}
+barEl.addEventListener('click',function(e){
+  var b=e.target.closest('[data-b]');if(!b)return;var k=b.dataset.b;
+  if(k==='edit'){editing=true;msg='';render();bar();}
+  else if(k==='restore'){var d=readDraft();if(d){S=JSON.parse(d);editing=true;dirty=true;render();bar();}}
+  else if(k==='cancel'){S=JSON.parse(SRC);editing=false;dirty=false;msg='';try{sessionStorage.removeItem('mae-draft');}catch(e){}render();bar();}
+  else if(k==='save'){save();}
+});
+function save(){
+  barEl.innerHTML='<span class="msg">Saving…</span>';
+  art.publish(build()).then(function(){try{sessionStorage.removeItem('mae-draft');}catch(e){}barEl.innerHTML='<span class="msg">Saved. Reloading…</span>';},function(err){
+    var c=err&&err.code;
+    if(c==='conflict'){msg='A newer version was saved elsewhere. The page is reloading; use Restore to get your edits back.';}
+    else if(c==='not_writer'||c==='not_granted'){canEdit=false;editing=false;S=JSON.parse(SRC);render();}
+    else{msg='Save failed ('+(c||'error')+'). Your edits are kept; try again.';}
+    bar();
+  });
+}
+
+render();
+if(window.claude&&window.claude.use){
+  Promise.all([window.claude.use('artifact'),window.claude.use('user'),window.claude.use('assets')]).then(function(r){
+    art=r[0];assets=r[2];var user=r[1];
+    if(!art||!user)return false;
+    return user.canEdit();
+  }).then(function(ok){canEdit=!!ok;bar();}).catch(function(){});
+}
+})();
+</script>
+
+</body>
+</html>
