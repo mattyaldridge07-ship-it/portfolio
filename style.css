@@ -1,0 +1,96 @@
+:root {
+  --ink: #111;
+  --muted: #666;
+  --rule: #222;
+  --hair: #cfcfcf;
+  --paper: #fff;
+  --bg: #f1f0ec;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ink: #ececec; --muted: #9a9a9a; --rule: #d8d8d8; --hair: #3a3a3a; --paper: #17181a; --bg: #0e0f10; }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; overflow-wrap: anywhere; background: var(--bg); color: var(--ink);
+  font: 17px/1.55 "Times New Roman", Times, Georgia, serif;
+}
+main { max-width: 960px; margin: 0 auto; padding: 32px 16px 64px; }
+a { color: inherit; }
+img { display: block; width: 100%; height: auto; }
+
+.label {
+  display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 2px;
+}
+
+.titleblock, .sheet {
+  background: var(--paper); border: 2px solid var(--rule);
+  padding: 28px; margin-bottom: 32px;
+}
+
+/* Title block grid */
+.tb { display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1fr) minmax(0,1fr); border: 1.5px solid var(--rule); }
+.tb > div { padding: 10px 12px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.tb > div:nth-child(3), .tb > div:nth-child(5), .tb > div:last-child { border-right: 0; }
+.tb .name { grid-row: span 3; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+.tb .wide { grid-column: span 2; }
+.tb .proj { display: flex; gap: 12px; align-items: center; }
+.tb .proj svg { width: 40px; flex: none; }
+.tb > div:nth-last-child(-n+3) { border-bottom: 0; }
+h1 { font-size: 40px; line-height: 1.05; margin: 0; }
+
+.lede { font-size: 20px; margin: 22px 0 6px; }
+.small { color: var(--muted); font-size: 15px; margin: 0 0 20px; }
+
+.index { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); border: 1.5px solid var(--rule); }
+.index .cell {
+  padding: 10px 12px; text-decoration: none; font-weight: bold;
+  border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.index .cell:nth-child(3n) { border-right: 0; }
+.index .cell:nth-last-child(-n+3) { border-bottom: 0; }
+.index .cell:hover { background: var(--bg); }
+
+.covers { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 20px; }
+
+/* Sheets */
+.sheet-head {
+  display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+  border-bottom: 2px solid var(--rule); padding-bottom: 8px; margin-bottom: 20px;
+}
+.sheet-head .label { display: inline; font-size: 14px; color: var(--ink); font-weight: bold; }
+.sheet-head h2 { margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: .02em; }
+.sheet-head .sub { margin-left: auto; color: var(--muted); }
+
+.top { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 24px; align-items: start; }
+.intro { margin-top: 0; }
+.data { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 16px; }
+.data td { border: 1px solid var(--hair); padding: 4px 8px; }
+.data td:last-child { font-weight: bold; }
+.note { border-left: 3px solid var(--rule); padding-left: 14px; margin: 0; }
+
+.did { border: 1px solid var(--hair); padding: 12px 16px; margin: 24px 0; }
+.did ul { margin: 4px 0 0; padding-left: 20px; }
+.did li { margin: 3px 0; }
+
+.grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 24px; }
+figure { margin: 0; }
+figure img { border: 1px solid var(--hair); }
+figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+figcaption b, figcaption .fn { color: var(--ink); }
+.fn { font-weight: bold; margin-right: 4px; }
+
+footer { text-align: center; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 720px) {
+  .titleblock, .sheet { padding: 16px; }
+  .tb { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .tb .name { grid-column: span 2; grid-row: auto; }
+  .tb > div { border-right: 1px solid var(--rule) !important; border-bottom: 1px solid var(--rule) !important; }
+  .index { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .index .cell { border-right: 1px solid var(--rule) !important; border-bottom: 1px solid var(--rule) !important; }
+  .top, .grid { grid-template-columns: 1fr; }
+  .sheet-head .sub { margin-left: 0; width: 100%; }
+  h1 { font-size: 32px; }
+}

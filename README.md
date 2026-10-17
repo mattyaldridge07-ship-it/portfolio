@@ -2,4 +2,4 @@
 
 Live: https://mattyaldridge07-ship-it.github.io/portfolio/
 
-Static copy of my recruiter portfolio: a CAD and simulation pipeline I built, and the designs it produced from my briefs. `Matty_Aldridge_Engineering_Portfolio.pdf` is the printable version.
+Six projects in aerospace and motorsport hardware: Formula Student drivetrain, Hall-effect thruster, supersonic intake, rocket hop vehicle, aerospike engine and EV corner module. `Matty_Aldridge_Engineering_Portfolio.pdf` is the printable version.
